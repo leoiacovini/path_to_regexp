@@ -73,6 +73,35 @@ void main() {
         returns('/foo', given: {'key': 'foo'}),
       ],
     );
+    tests(
+      '/:dashed-key',
+      tokens: [
+        path('/'),
+        parameter('dashed-key'),
+      ],
+      regExp: [
+        matches('/foo', ['/foo', 'foo'], extracts: {'dashed-key': 'foo'}),
+        matches(
+          '/foo.json',
+          ['/foo.json', 'foo.json'],
+          extracts: {'dashed-key': 'foo.json'},
+        ),
+        matches(
+          '/foo%2Fbar',
+          ['/foo%2Fbar', 'foo%2Fbar'],
+          extracts: {'dashed-key': 'foo%2Fbar'},
+        ),
+        matches(
+          r'/;,:@&=+$-_.!~*()',
+          [r'/;,:@&=+$-_.!~*()', r';,:@&=+$-_.!~*()'],
+          extracts: {'dashed-key': r';,:@&=+$-_.!~*()'},
+        ),
+        mismatches('/foo/bar'),
+      ],
+      toPath: [
+        returns('/foo', given: {'dashed-key': 'foo'}),
+      ],
+    );
   });
 
   group('prefix path', () {

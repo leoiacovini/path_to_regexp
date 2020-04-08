@@ -10,7 +10,7 @@ const _defaultPattern = '([^/]+?)';
 ///   1. The parameter name.
 ///   2. An optional pattern.
 final _parameterRegExp = RegExp(
-    /* (1) */ r':(\w+)'
+    /* (1) */ r':([\w-]+)'
     /* (2) */ r'(\((?:\\.|[^\\()])+\))?');
 
 /// Parses a [path] specification.
